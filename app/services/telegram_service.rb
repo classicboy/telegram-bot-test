@@ -12,16 +12,11 @@ class TelegramService
       Telegram::Bot::Types::InlineKeyboardMarkup.new( [[btn1, btn2]] ))
   end
   
-  # def cmd_q1_a1
-    
-  #   p "cmd_q1_a1"
-  #   api.sendMessage(message.chat.id, 'Your answer for first question is Option 1')
-  # end
-  
-  # def q1_a1
-  #   p "qa a1"
-  # end
-  
+  def cmd_q1_a1
+    p "cmd_q1_a1"
+    api.sendMessage(message.chat.id, 'Your answer for first question is Option 1')
+  end
+
   def cmd_q1_a2
     api.sendMessage(message.chat.id, 'Your answer for first question is Option 2')
   end
