@@ -1,7 +1,7 @@
 # Add configuration values here, as shown below.
 db_name: "my-telegram-db"
 qa_db_name: "qa-telegram-db"
-telegram_bot_token: '528099473:AAEn19WxEKBB6MEmhA87NWAO5shNsEXWhUc'
+telegram_bot_token: '565464044:AAHerf8uxpDaGNW0wFyPTzld20LT-EvZK6Q'
 
 #
 # pusher_app_id: "2954"

@@ -24,15 +24,18 @@ class TelegramService
           Telegram::Bot::Types::InlineKeyboardMarkup.new( [btns] ))
     end
 
+    @db.close
     # api.sendMessage(message.chat.id, 'this is a test')
   end
-  
-  def cmd_q1_a1
-    api.sendMessage(message.chat.id, 'Your answer for first question is Option 1')
-  end
 
-  def cmd_q1_a2
-    api.sendMessage(message.chat.id, 'Your answer for first question is Option 2')
+  @db = LevelDB::DB.new(ENV["qa_db_name"]).keys.each do |key|
+    if key.include? '_a'
+      define_method "cmd_#{key}" do
+        question = key.split('_').first.delete('q')
+        answer = key.split('_').last.delete('a')
+        api.sendMessage(message.chat.id, "Your answer for question #{question} is Option #{answer}")
+      end
+    end
   end
 
   # this method will be called if no command found
