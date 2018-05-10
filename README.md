@@ -15,10 +15,20 @@ https://web.telegram.org/#/im?p=@second_colinvn_bot
 
 # Sample Data
 
-Sample data can be generated using `rake data:sample`
+Rake task is defined in `lib/tasks/data.rake`
+
+There are two database
+
+#### question - answers database
+
+Sample data can be generated using `rake qa:sample`
+
+Data can be fetched using `rake qa:fetch`
+
+To flush data `rake qa:flush`
+
+#### users' answers database
 
 Data can be fetched using `rake data:fetch`
 
 To flush data `rake data:flush`
-
-Rake task is defined in `lib/tasks/data.rake`

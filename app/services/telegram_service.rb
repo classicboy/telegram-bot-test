@@ -1,12 +1,9 @@
 class TelegramService
   include Telegram::Bot::ClientAccessors
 
-  def initialize
-    @db = LevelDB::DB.new ENV["db_name"]
-  end
-
   # this method will be called if /test string was found in message text
   def cmd_test
+    @db = LevelDB::DB.new(ENV["qa_db_name"])
     keys = @db.keys
     qas = [] # collection question with answers
 
@@ -26,6 +23,8 @@ class TelegramService
       api.sendMessage(message.chat.id, "#{@db.get("#{qa.keys[0]}").force_encoding('UTF-8')}", reply_markup:
           Telegram::Bot::Types::InlineKeyboardMarkup.new( [btns] ))
     end
+
+    # api.sendMessage(message.chat.id, 'this is a test')
   end
   
   def cmd_q1_a1
