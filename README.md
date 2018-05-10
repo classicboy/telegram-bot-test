@@ -10,7 +10,7 @@ gem 'leveldb-ruby'
 # BOT test url
 
 ```
-https://web.telegram.org/#/im?p=@second_colinvn_bot
+https://web.telegram.org/#/im?p=@third_colinvn_bot
 ```
 
 # Sample Data
@@ -32,3 +32,12 @@ To flush data `rake qa:flush`
 Data can be fetched using `rake data:fetch`
 
 To flush data `rake data:flush`
+
+# How to
+
+For now, there's no polling job or webhook yet.
+Run `rake telegram:update` to pull new updates from Telegram and send replies to Telegram users
+
+Command on telegram: `/test`
+
+You can you the root route of web app for the same purpose

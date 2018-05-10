@@ -37,10 +37,12 @@ namespace :qa do
 		TelegramDB.new("qa_db_name").sample_data
   end
 
+  desc "Fetch DB and output to console"
   task :fetch => :environment do
 		TelegramDB.new("qa_db_name").fetch
   end
 
+  desc "Remove all data in selected db"
   task :flush => :environment do
 		TelegramDB.new("qa_db_name").flush
   end

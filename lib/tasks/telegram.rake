@@ -1,7 +1,10 @@
-class TelegramController < ApplicationController
-  
-  def show
-    @me_info = @api.getMe
+require 'leveldb'
+
+namespace :telegram do
+  desc "update telegram"
+  task update: :environment do
+    @api = Telegram::Bot::Api.new(ENV['telegram_bot_token'])
+    @db = LevelDB::DB.new ENV["db_name"]
     @updates = @api.getUpdates
 
     client = Telegram::Bot::Client.new(TelegramService)
@@ -12,9 +15,9 @@ class TelegramController < ApplicationController
         lastest_message_id = @db.get("uq_#{TimeFormatter.today_str}_#{message.from.id}")
         if lastest_message_id
           next if lastest_message_id.to_i >= message.message_id.to_i
-          @api.sendMessage(message.chat.id, 'Please comback tomorrow')                      
+          @api.sendMessage(message.chat.id, 'Please comback tomorrow')
         else
-          client.handle({message: {text: update.message.text, chat: {id: update.message.chat.id}}})          
+          client.handle({message: {text: update.message.text, chat: {id: update.message.chat.id}}})
         end
 
         # Store user question
