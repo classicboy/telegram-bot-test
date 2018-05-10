@@ -1,13 +1,13 @@
 require 'leveldb'
 
-namespace :telegram do
+namespace :data do
   desc "Create sample question and answer"
   task :sample => :environment do
-	@db = LevelDB::DB.new "my-telegram-db"
+	@db = LevelDB::DB.new ENV["db_name"]
 	@db.put "q1", "1. Kyber là sàn tập trung hay phi tập trung?"
 	@db.put "q1_a1", "Tập trung"
 	@db.put "q1_a2", "Phi tập trung"
-	@db.put "q1_correct_answer", "Phi tập trung"
+	@db.put "q1_correct_answer", "Phi tập chung"
 
 	@db.put "q2", "2. Kyber được tích hợp vào ví nào?"
 	@db.put "q2_a1", "MEW"
