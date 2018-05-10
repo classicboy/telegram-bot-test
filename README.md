@@ -1,24 +1,24 @@
-# README
+# QuyetDC - Telegram bot Test 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Gem
 
-Things you may want to cover:
+```
+gem 'telegram-ruby'
+gem 'leveldb-ruby'
+```
 
-* Ruby version
+# BOT test url
 
-* System dependencies
+```
+https://web.telegram.org/#/im?p=@second_colinvn_bot
+```
 
-* Configuration
+# Sample Data
 
-* Database creation
+Sample data can be generated using `rake telegram:sample`
 
-* Database initialization
+Data can be fetched using `rake telegram:fetch`
 
-* How to run the test suite
+To flush data `rake telegram:flush`
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Rake task is defined in `lib/tasks/data.rake`

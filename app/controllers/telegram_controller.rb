@@ -6,43 +6,35 @@ class TelegramController < ApplicationController
 
     client = Telegram::Bot::Client.new(TelegramService)
 
-    @updates.each do |update|
+    @updates.reverse.each do |update|
       if message = update.message
-        p "update - normal message - #{update.message.as_json}"
-
-        # Check if user has been shown the questions today or not
-        # uq: user question
-        # if @db.get("uq_#{message.date}_#{message.from.id}")
-          # TODO send msg inform user that user tested today
-        # else
-          client.handle({message: {text: update.message.text, chat: {id: update.message.chat.id}}})
-          @db.put "uq_#{message.date}_#{message.from.id}", "yes"
-        # end
-      elsif callback_query = update.callback_query
-        p "callback query - #{callback_query.as_json}"
-
-        # send updated message instead of showing keyboard markup
-        @api.deleteMessage(callback_query.message.chat.id, callback_query.message.message_id)
-        client.handle({message: {text: callback_query.data, chat: {id: callback_query.message.chat.id}}})
-
-        # TODO: store user_answer
-        # user_answers
-        # u_a_1 telegram_uuid, question id, answer id, date
-        message = callback_query.message
-        # @db.put "ua_#{message.date}_#{callback_query.from.id}", "yes"
-
-        # TODO: Store user in correct_answer of user_answers key
-
-        # TODO: migration to create questions, answer to show user
-        # DB
-        # questions
-        # q_1, id, name, description
+        next unless update.message.text.include? '/test'
         
-        # answers
-        # a_1, id, callback_data, question
+        lastest_message_id = @db.get("uq_#{TimeFormatter.today_str}_#{message.from.id}")
+        if lastest_message_id
+          next if lastest_message_id.to_i >= message.message_id.to_i  
+          @api.sendMessage(message.chat.id, 'Please comback tomorrow')                      
+        else
+          client.handle({message: {text: update.message.text, chat: {id: update.message.chat.id}}})          
+        end
+
+        # Store user question
+        @db.put "uq_#{TimeFormatter.today_str}_#{message.from.id}", "#{message.message_id}"        
+      elsif callback_query = update.callback_query
+
+        if !(@db.get "ua_q1_#{callback_query.from.id}") || (@db.get "ua_q1_#{callback_query.from.id}").to_i < TimeFormatter.today_str.to_i
+          # send updated message instead of showing keyboard markup
+          @api.deleteMessage(callback_query.message.chat.id, callback_query.message.message_id)
+          client.handle({message: {text: callback_query.data, chat: {id: callback_query.message.chat.id}}})
+        end 
+
+        # Store user_answer
+        message = callback_query.message
+        # @db.put "ua_q1_#{message.date}_#{callback_query.from.id}", "a_1" 
+        @db.put "ua_q1_#{callback_query.from.id}", TimeFormatter.today_str
       end
-          
     end
 
+    @db.close 
   end
 end
