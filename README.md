@@ -7,15 +7,9 @@ gem 'telegram-ruby'
 gem 'leveldb-ruby'
 ```
 
-# BOT test url
+# Data
 
-```
-https://web.telegram.org/#/im?p=@third_colinvn_bot
-```
-
-# Sample Data
-
-Rake task is defined in `lib/tasks/data.rake`
+Rake task is defined in `lib/tasks/*.rake`
 
 There are two database
 
@@ -35,7 +29,17 @@ To flush data `rake data:flush`
 
 # How to
 
+Please create a telegram bot first, or use mine 
+
+```
+https://web.telegram.org/#/im?p=@third_colinvn_bot
+```
+
+Please do set your bot test API key in `config/application.yml`
+
 For now, there's no polling job or webhook yet.
 Run `rake telegram:update` to pull new updates from Telegram and send replies to Telegram users
 
 Command on telegram: `/test`
+
+Source code are mainly in `lib/tasks` and `app/services`
