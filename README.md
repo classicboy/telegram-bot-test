@@ -39,5 +39,3 @@ For now, there's no polling job or webhook yet.
 Run `rake telegram:update` to pull new updates from Telegram and send replies to Telegram users
 
 Command on telegram: `/test`
-
-You can you the root route of web app for the same purpose
