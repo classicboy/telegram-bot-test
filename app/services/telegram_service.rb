@@ -2,7 +2,6 @@ class TelegramService
   include Telegram::Bot::ClientAccessors
 
   def initialize
-    #TODO: change this to setting var
     @db = LevelDB::DB.new ENV["db_name"]
   end
 
