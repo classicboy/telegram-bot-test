@@ -2,7 +2,7 @@ class TelegramService
   include Telegram::Bot::ClientAccessors
 
   # this method will be called if /test string was found in message text
-  def cmd_test
+  def cmd_test    
     @db = LevelDB::DB.new(ENV["qa_db_name"])
     keys = @db.keys
     qas = [] # collection question with answers
@@ -25,10 +25,10 @@ class TelegramService
     end
 
     @db.close
-    # api.sendMessage(message.chat.id, 'this is a test')
   end
 
-  @db = LevelDB::DB.new(ENV["qa_db_name"]).keys.each do |key|
+  @db = LevelDB::DB.new(ENV["qa_db_name"])
+  @db.keys.each do |key|
     if key.include? '_a'
       define_method "cmd_#{key}" do
         question = key.split('_').first.delete('q')
@@ -37,6 +37,7 @@ class TelegramService
       end
     end
   end
+  @db.close
 
   # this method will be called if no command found
   def cmd_fallback

@@ -20,10 +20,13 @@ class TelegramDB
 		@db.put "q3_a1", "Có"
 		@db.put "q3_a2", "Không"
 		@db.put "q3_correct_answer", "q3_a1"
+
+		@db.close
 	end
 
 	def fetch
 		@db.each { |k, v| puts "--- #{k}: #{v}"}
+		@db.close
 	end
 
 	def flush
