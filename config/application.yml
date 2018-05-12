@@ -1,6 +1,7 @@
 # Add configuration values here, as shown below.
 db_name: "my-telegram-db"
 qa_db_name: "qa-telegram-db"
+user_db_name: "user-db"
 telegram_bot_token: '565464044:AAHerf8uxpDaGNW0wFyPTzld20LT-EvZK6Q'
 
 #

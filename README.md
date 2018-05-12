@@ -11,7 +11,7 @@ gem 'leveldb-ruby'
 
 Rake task is defined in `lib/tasks/*.rake`
 
-There are two database
+There are three database
 
 #### question - answers database
 
@@ -20,6 +20,12 @@ Sample data can be generated using `rake qa:sample`
 Data can be fetched using `rake qa:fetch`
 
 To flush data `rake qa:flush`
+
+#### user database
+
+Data can be fetched using `rake data:fetch`
+
+To flush data `rake data:flush`
 
 #### users' answers database
 
