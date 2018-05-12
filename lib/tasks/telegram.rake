@@ -20,10 +20,18 @@ namespace :telegram do
         message_handler = MessageHandler.new(client, @api, @db, message)
         message_handler.cmd_test
         
+        # TODO: need to check to send 1 time per command only
         if message.text.include? '/result'
           uuids = message_handler.cmd_result
-          user_names = (uuids.map { |uid| user_handler.get_user uid}).join(', ')
-          @api.sendMessage(message.chat.id, "Selected users are: #{user_names}")
+
+          if uuids && uuids.count > 0
+            user_names = (uuids.map { |uid| user_handler.get_user uid}).join(', ')
+            @api.sendMessage(message.chat.id, "Selected users are: #{user_names}")
+          elsif uuids && uuids.empty?
+            @api.sendMessage(message.chat.id, "No one answer all questions correctly today")
+          else
+            @api.sendMessage(message.chat.id, "Wrong password")
+          end          
         end
       elsif callback_query = update.callback_query
         # Store user_answer

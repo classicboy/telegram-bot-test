@@ -26,26 +26,31 @@ class MessageHandler
   def cmd_result
     return unless @message.text.include? '/result'
     
-    user_answers = {}
-    @db.each { |k, v| user_answers[k.split('_').last] = v if k.include? "ua_#{TimeFormatter.today_str}" }
+    password = @message.text.gsub '/result', ''
+    if password == ENV['password']
+      user_answers = {}
+      @db.each { |k, v| user_answers[k.split('_').last] = v if k.include? "ua_#{TimeFormatter.today_str}" }
 
-    correct_answers = []
-    qa_db = LevelDB::DB.new ENV["qa_db_name"]
-    qa_db.each { |k, v|  correct_answers.push v if k.include? 'correct_answer' }
-    qa_db.close
+      correct_answers = []
+      qa_db = LevelDB::DB.new ENV["qa_db_name"]
+      qa_db.each { |k, v|  correct_answers.push v if k.include? 'correct_answer' }
+      qa_db.close
 
-    correct_user_answers = []
+      correct_user_answers = []
 
-    user_answers.each do |k,v|
-      is_correct = true
-      correct_answers.each do |a|
-        is_correct = false unless v.include? a
+      user_answers.each do |k,v|
+        is_correct = true
+        correct_answers.each do |a|
+          is_correct = false unless v.include? a
+        end
+
+        correct_user_answers.push k if is_correct
       end
-
-      correct_user_answers.push k if is_correct
+      return correct_user_answers.sample(3)  
+    else 
+      return nil
     end
-
-    return correct_user_answers.sample(3)    
+  
   end
 
 end
