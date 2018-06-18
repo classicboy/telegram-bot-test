@@ -18,8 +18,10 @@ namespace :telegram do
     @updates.reverse.each do |update|
       if message = update.message
         message_handler = MessageHandler.new(client, @api, @db, message)
-        message_handler.cmd_test
         
+        if message.text.include? '/test'
+          message_handler.cmd_test
+        end
         # TODO: need to check to send 1 time per command only
         if message.text.include? '/result'
           uuids = message_handler.cmd_result

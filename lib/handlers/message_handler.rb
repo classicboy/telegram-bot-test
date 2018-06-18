@@ -15,7 +15,7 @@ class MessageHandler
     lastest_message_id = @db.get("uq_#{TimeFormatter.today_str}_#{@message.from.id}")
     if lastest_message_id
       return if lastest_message_id.to_i >= @message.message_id.to_i
-      @api.sendMessage(@message.chat.id, 'Please comback tomorrow')
+      @api.sendMessage(@message.chat.id, 'Please comeback tomorrow')
     else
       @client.handle({message: {text: @message.text, chat: {id: @message.chat.id}}})
     end
