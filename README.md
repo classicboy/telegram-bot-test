@@ -9,6 +9,22 @@ gem 'leveldb-ruby'
 
 # Data
 
+- I defined some sample questions in `db/seeds.rb` file. You can run `rake db:seed`
+
+# Cronjob
+
+- We use `sidekiq` + `whenever` to run cronjob. Check `Gemfile` for more detail.
+- We will need redis installed. Just follow this article: `https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04`
+- You can update cronjob by running: `whenever --update-crontab` 
+    or view cronjob of system by `crontab -l`
+    or remove cronjob by `crontab -r`
+- To run sidekiq `bundle exec sidekiq`
+- To view sidekiq web `localhost/sidekiq`
+
+
+
+-----------------------------------------
+
 Rake task is defined in `lib/tasks/*.rake`
 
 There are three database
